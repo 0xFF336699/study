@@ -1,0 +1,1 @@
+select p.type, p.shortcode from post p where p.uuid = any(array(select u.posts[0:10] from ig_user u where u.username='jasonbolden' limit 1));
