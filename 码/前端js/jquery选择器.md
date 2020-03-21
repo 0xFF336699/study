@@ -1,3 +1,12 @@
+
+
+```
+class和属性，waiting似乎必须是双引号,但是有时候似乎单独一个class和一个属性无所谓有没有引号或者单双引号，以后继续琢磨。
+let images = Dom7(element + ` ${lazyImageContainerSelector}[data-image-status="waiting"]`);
+```
+
+https://www.jquery123.com/category/selectors/attribute-selectors/
+
 1、多条件选择器
 用途：使用多个条件同时选择多个标签
 
