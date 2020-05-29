@@ -15,9 +15,28 @@ pg各种权限
 - 然后 drop role snacks;
 - 删除角色权限 revoke  ALL PRIVILEGES ON DATABASE snacks from  group_snacks;  
 
+
+
+ 创建容器
+
+```
+dockerrm pg-ig-crawler  && \
+docker run -itd --name pg-ig-crawler \
+-p 11001:5432 \
+-v /work/ig/pg/crawler/pw:/pw  \
+-v /work/ig/pg/crawler/data:/var/lib/postgresql/data \
+-e POSTGRES_PASSWORD_FILE=/pw \
+-l "SERVICE_TAGS=墙外ig爬虫数据库" \
+-l  "SERVICE_NAME=pg-ig-crawler" \
+postgres:10.11-alpine
+```
+
+
+
 初始创建操作 dev数据库
+
 - 进入pg 
-> su - postgres  
+> su - postgres or  su -l postgres -s /bin/bash  
 > psql  
 - 创建用户
 > 
