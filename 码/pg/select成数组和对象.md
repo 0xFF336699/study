@@ -7,3 +7,12 @@ row_to_json image是对象，json_agg items是数组
 select json_agg(ii.*) from (select i.is_video, i.index from resource_item i where i.post_uuid = 'afb00766366511ea99e78f656b7b41cb') ii;
 
 select成数组
+
+
+
+单个字段返回可以直接是数组
+
+```
+houses := []string{}
+pg.QueryOne(&houses, `select uuid from user_express_house`)
+```
