@@ -1,4 +1,4 @@
-mkdir /work/goshangwoa/ && \
+mkdir -p /work/goshangwoa/ && \
 cd /work/goshangwoa/ &&\
 git init && \
 git remote add origin git@gitee.com:shangwoa-snacks/shangwoa-go.git && \
