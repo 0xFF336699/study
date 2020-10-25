@@ -45,3 +45,36 @@ https://ant.design/docs/react/use-with-create-react-app-cn
     "start": "concurrently  \"cross-env BROWSER=none yarn craco start  react-start\" \"wait-on http://localhost:3000 && electron .\"",
 ```
 
+
+
+
+
+非全局安装启动
+
+```bash
+node_modules\.bin\electron.cmd ./build/electron.js
+```
+
+
+
+创建流程2
+
+https://juejin.im/post/6844904150405218317
+
+
+
+git clone https://github.com/electron/electron-quick-start
+
+npm install concurrently wait-on craco cross-env --save-dev
+
+
+
+yarn add concurrently wait-on craco cross-env --save-dev
+
+
+
+
+
+```
+"dev": "concurrently \"wait-on http://192.168.177.180:3006 && electron .\" \"cross-env BROWSER=none npm start\""
+```
