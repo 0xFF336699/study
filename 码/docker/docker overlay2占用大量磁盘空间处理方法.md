@@ -48,3 +48,11 @@ cat /dev/null > *-json.log
 关于清理的操作可参考文章：《[LINUX CENTOS /VAR/LIB/DOCKER/CONTAINER目录导致系统存储爆满，占用大量存储解决方案](http://www.choupangxia.com/2019/09/15/linux-centos-var-lib-docker-container目录导致系统存储爆满，占用大量存储解/)》
 
 原文链接：《[docker overlay2占用大量磁盘空间处理方法](http://www.choupangxia.com/2020/01/30/docker-overlay2/)》
+
+
+
+
+
+bwg3直接这样
+
+echo /dev/null >/var/lib/docker/containers/86ea8b6787e947ac105191ede392062507c3b47d4692b09de0d262b02adbbe7a/86ea8b6787e947ac105191ede392062507c3b47d4692b09de0d262b02adbbe7a-json.log
