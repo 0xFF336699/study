@@ -19,3 +19,17 @@ got := f.FormatQuery(nil, test.q, test.params...)
 
 
 got就是实际query
+
+
+
+
+
+```
+F:\work\gopath\src\shangwoa\ig2\common\pghook\hook.go
+
+// 格式化query
+func GetFormattedQuery(q string, params ...interface{}) []byte {
+	return f.FormatQuery(nil, q, params...)
+}
+```
+
