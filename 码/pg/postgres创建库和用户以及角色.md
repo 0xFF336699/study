@@ -28,7 +28,7 @@ docker run -itd --name pg-ig-crawler \
 -e POSTGRES_PASSWORD_FILE=/pw \
 -l "SERVICE_TAGS=墙外ig爬虫数据库" \
 -l  "SERVICE_NAME=pg-ig-crawler" \
-postgres:10.11-alpine
+postgres:12.1-alpine
 ```
 
 
