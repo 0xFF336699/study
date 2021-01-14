@@ -16,7 +16,15 @@ var f orm.Formatter
 got := f.FormatQuery(nil, test.q, test.params...)
 ```
 
+```
+messages.go文件的426行
+writeQueryMsg
 
+	bytes, err := appendQuery(fmter, buf.Bytes, query, params...)
+	if err != nil {
+		return err
+	}
+```
 
 got就是实际query
 
