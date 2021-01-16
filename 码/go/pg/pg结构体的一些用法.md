@@ -1,3 +1,11 @@
+```
+ParseIsOk          bool       `json:"parse_is_ok" pg:",use_zero"` // use_zero是可以使用false的意思
+EnabledForSuperior bool       `json:"enabled_for_superior" pg:",use_zero"`
+CreateTime         *time.Time `json:"create_time" pg:",default:now(),use_zero" sql:",notnull"`
+```
+
+
+
 https://github.com/go-pg/pg/issues/1558
 
 ```
