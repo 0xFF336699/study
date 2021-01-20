@@ -41,3 +41,9 @@ func GetFormattedQuery(q string, params ...interface{}) []byte {
 }
 ```
 
+```
+添加了一个变量来打印sql
+
+	pg.PrintPgSql = true;
+```
+
