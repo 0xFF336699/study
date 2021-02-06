@@ -4,11 +4,24 @@ EnabledForSuperior bool       `json:"enabled_for_superior" pg:",use_zero"`
 CreateTime         *time.Time `json:"create_time" pg:",default:now(),use_zero" sql:",notnull"`
 ```
 
+```
+排除字段需要用中划线，不是下划线
+
+	BrowserInfo string `json:"browser_info" pg:"-" sql:"-"`
+```
+
 
 
 https://github.com/go-pg/pg/issues/1558
 
 ```
+
+type Renamed struct {
+	TableName struct{}     `sql:"items,alias:item"`
+	Id        int          `sql:"item_id,pk"`
+	Mapping   *ItemMapping `pg:"fk:item_id"`
+}
+
 type Subscription struct {
 	tableName struct{} `pg:"\"Subscriptions\",discard_unknown_columns"`
 
