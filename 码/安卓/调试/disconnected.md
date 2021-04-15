@@ -1,0 +1,2 @@
+有一次layout xml文件有错误就进行debug，连续几次调试都是走到这个layout的时候disconnected，在重启ide后再次debug时提示layout代码有错误。
+
