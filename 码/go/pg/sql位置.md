@@ -1,4 +1,17 @@
+
+
 ```
+新版本改成
+pg.PrintPgSql = true
+在github.com\go-pg\pg\messages.go425行
+```
+
+
+
+
+
+```
+
 F:\work\gopath\src\github.com\go-pg\pg\internal\pool\conn.go
 // 这里为啥外部调用不到？
 var DebugPrintSql = false
