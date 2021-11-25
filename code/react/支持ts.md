@@ -1,0 +1,1 @@
+npm install --save-dev typescript @types/jest @types/react @types/react-native @types/react-test-renderer  

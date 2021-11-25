@@ -1,0 +1,1 @@
+select json_agg(t.*) from (select * from post limit 1) t;

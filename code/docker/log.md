@@ -1,0 +1,1 @@
+docker logs --since="2020-11-03" express-house-prod | grep -c 'complete team: pack member is taken_by_scan'

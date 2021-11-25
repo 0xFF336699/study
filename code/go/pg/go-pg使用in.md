@@ -1,0 +1,1 @@
+db.Query(&users, `SELECT * FROM users WHERE id IN (?)`, pg.In(ids))  
