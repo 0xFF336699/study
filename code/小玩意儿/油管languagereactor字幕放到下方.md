@@ -68,7 +68,39 @@
     });
 })();
 
+-----
+```
+// ==UserScript==
+// @name         翻译窗口位置
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://www.youtube.com/watch*
+// @run-at document-start
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
 
+(function() {
+    'use strict';
+    // Your code here...
+    let wo = window.open;
+    window.open = open;
+    function open(){
+        if(arguments[0].indexOf('https://dictionary.cambridge.org/dictionary') == -1){
+            return wo.apply(window, arguments);
+        }
+        arguments[2] = 'width=800,height=2090';
+        var win = wo.apply(window, arguments);
+        win.moveTo(3060, 0);
+        return win
+    }
+
+   // window.resizeTo(800,2090);
+    //window.moveTo(3060, 0);
+})();
+```
 
 
 
