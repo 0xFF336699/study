@@ -1,0 +1,10 @@
+<templateSet group="user">
+  <template name="2bindvalue" value="&#10;var $name$: $type$ = $value$&#10;    @Bindable&#10;    get(){return field}&#10;    set(value){&#10;        if(value == field)return&#10;        field = value&#10;        notifyPropertyChanged(BR.$name$)&#10;    }" description="binding value" toReformat="false" toShortenFQNames="true">
+    <variable name="name" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="type" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+</templateSet>
