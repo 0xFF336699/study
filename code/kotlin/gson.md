@@ -16,3 +16,7 @@
         val t = object:TypeToken<ScanSettingViewModelConfData>(){}.type
         val data2:ScanSettingViewModelConfData = gson.fromJson(s, object:TypeToken<ScanSettingViewModelConfData>(){}.type)
 
+
+
+        val type = object :TypeToken<HashMap<String, ParcelData>>(){}.type
+        val map = gson.fromJson<HashMap<String, ParcelData>>(js, type)

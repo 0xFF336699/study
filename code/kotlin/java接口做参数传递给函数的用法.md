@@ -27,3 +27,9 @@
     https://lankydan.dev/calling-java-functional-interfaces-from-kotlin
 
     
+    
+        this.addOnPropertyChangedCallback(object : OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                TODO("Not yet implemented")
+            }
+        })
