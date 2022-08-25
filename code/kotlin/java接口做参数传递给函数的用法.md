@@ -33,3 +33,29 @@
                 TODO("Not yet implemented")
             }
         })
+
+
+class AccessiBilityListener(val packageName: String, val clsName:String, val onEvent: (event:AccessibilityEvent, info:AccessibilityNodeInfo) -> Unit) {}
+// 注意双引号的用法
+class BarcodeScanner {
+    val listener2 = AccessiBilityListener("", "", ::onEvent)
+    fun onEvent(event:AccessibilityEvent, root:AccessibilityNodeInfo){
+
+    }
+}
+
+// 多函数接口传递
+
+        val bl = service.dispatchGesture(
+            GestureDescription.Builder()
+                .addStroke(GestureDescription.StrokeDescription(path, 0, 100)).build(), object:
+                AccessibilityService.GestureResultCallback() {
+                override fun onCompleted(gestureDescription: GestureDescription?) {
+                    super.onCompleted(gestureDescription)
+                }
+
+                override fun onCancelled(gestureDescription: GestureDescription?) {
+                    super.onCancelled(gestureDescription)
+                }
+                                                                                                                                         }, null
+        )

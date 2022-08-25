@@ -15,3 +15,7 @@ param.toString()
 val call = { param: Int ->
 param.toString()
 }
+
+// 传递方法给变量
+var waitingScript: ((service:AccessibilityService) -> Unit)? = null
+            AccessibilityModel.waitingScript = reader::run
