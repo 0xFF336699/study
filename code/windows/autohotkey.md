@@ -61,3 +61,11 @@ WinGetActiveTitle, w
 Winset, AlwaysOnTop, Toggle, %w% 
 ;返回执行 
 return
+
+
+
+
+https://www.autohotkey.com/boards/viewtopic.php?t=4287
+
+
+
