@@ -16,6 +16,4 @@ other_path=${tmp_path:1} # 路径中除了磁盘以外的部分
 linux_path=${disk_id}${other_path} # 需要将/mnt/接在路径最前方
 echo "windows path is "${win_path}
 echo "linux path is "${linux_path}
-echo ${linux_path} | clip
-
-#pause
+echo "/"${linux_path} | clip
