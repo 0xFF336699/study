@@ -1,0 +1,1 @@
+adb -s 192.168.177.104:5555 shell "dumpsys window | grep mCurrentFocus"  
