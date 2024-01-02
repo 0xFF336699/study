@@ -1,0 +1,5 @@
+用activity做context创建的webview加载到window里能够弹出select，但是options在select按钮的后面，实际上依然是不能用的。
+stackoverf里有说是alert被限导致的，没有解决方案，只能用安卓原生来替换。  
+通过测试也发现alert能弹出来，但是不能点击。  
+
+当前只在加载到window的webview发现这个问题，加载到activity的webview没有这个问题。 不过也不敢确定是不是flags能有关联。  
