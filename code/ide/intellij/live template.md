@@ -52,9 +52,3 @@ backend backend_html_droid_qiwoa_com
 	server {{.ID}} {{.Address}}:{{.Port}}
 	{{end}}
 
-export Ali_Key="LTAI5tLxeB63E1kifgHyDUM5" \
-export Ali_Secret="jFSLW5UiNaYqVigp8UtGkBjCIvV06W" &&\
-/root/.acme.sh/acme.sh  --set-default-ca  --server  letsencrypt --issue --force --keylength   ec-256  --dns dns_ali -d html.droid.qiwoa.com  --debug 2 &&\
-cat /root/.acme.sh/html.droid.qiwoa.com_ecc/fullchain.cer /root/.acme.sh/html.droid.qiwoa.com_ecc/html.droid.qiwoa.com.key | tee /root/docker/haproxy/data/ssl/html.droid.qiwoa.com.pem \
-docker restart haproxy
-
