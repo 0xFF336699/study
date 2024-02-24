@@ -1,0 +1,9 @@
+<application>
+  <component name="ExportableFileTemplateSettings">
+    <default_templates>
+      <template name="react-jsx-page.jsx" reformat="true" live-template-enabled="true" />
+      <template name="react-jsx-page-with-params.jsx" reformat="true" live-template-enabled="true" />
+      <template name="react-jsx-page2.jsx" reformat="true" live-template-enabled="true" />
+    </default_templates>
+  </component>
+</application>

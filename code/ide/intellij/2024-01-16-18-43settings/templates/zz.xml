@@ -1,0 +1,172 @@
+<templateSet group="zz">
+  <template name="1tm" value="func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;type $LowTeamName$$MemberName$BodyShell struct{&#10;&#9;Body *$LowTeamName$$MemberName$Body&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$BodyShell)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data.Body&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;&#10;&#9;isRollBack = false&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}&#10;" description="生成接口" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="decapitalize(TeamName)" alwaysStopAt="false" />
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tmhouse" value="&#10;import (&#10;&#9;&quot;encoding/json&quot;&#10;&#9;&quot;fmt&quot;&#10;&#9;&quot;github.com/go-pg/pg&quot;&#10;&#9;&quot;shangwoa/common/net/request&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/pgdbs&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/router_session&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/tms&quot;&#10;)&#10;&#10;func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$Body)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;err, uuid, toReturn := router_session.CheckIsExperssHouseWithReturn(rd.R, resBody)&#10;&#9;if toReturn{&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;&#10;&#9;isRollBack = false&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}" description="快递驿站接口" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="decapitalize(TeamName)" alwaysStopAt="false" />
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1errr" value="if err != nil{&#10;    fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;$tag$&quot;, err.Error())&#10;    return &#10;}" description="err return" toReformat="false" toShortenFQNames="true">
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <variable name="tag" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1pi" value="fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;$tag$&quot;, $END$)&#10;return" description="print info and return" toReformat="false" toShortenFQNames="true">
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <variable name="tag" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1et" value="if !isOk{&#10;    request.PrintTMError(err, msg,&quot;file:&quot;, &quot;$fn$&quot;, &quot;team:&quot;, rd.Team, &quot;member:&quot;, rd.Member, &quot;index:&quot;, rd.RequestIndex, $extra$)&#10;    resBody.Msg = msg&#10;    return&#10;}$END$" description="print team error" toReformat="false" toShortenFQNames="true">
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <variable name="extra" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tmxcx" value="func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$Body)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;err, uuid, toReturn := router_session.CheckIsExperssXiaochengxuWithReturn(rd.R, resBody)&#10;&#9;if toReturn {&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;&#10;&#9;isRollBack = false&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}" description="小程序接口" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="decapitalize(TeamName)" alwaysStopAt="false" />
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1maprw" value="&#10;type $name$Map struct {&#10;&#9;sync.RWMutex&#10;&#9;Map map[$key$]$value$&#10;}&#10;&#10;&#10;func New$name$Map() *$name$Map {&#10;&#9;sm := new($name$Map)&#10;&#9;sm.Map = make(map[$key$]$value$)&#10;&#9;return sm&#10;}&#10;&#10;func (sm *$name$Map)Get(key $key$)($value$, bool) {&#10;&#9;sm.RLock()&#10;&#9;value, ok := sm.Map[key]&#10;&#9;sm.RUnlock()&#10;&#9;return value, ok&#10;}&#10;&#10;func (sm *$name$Map)Set(key $key$, value $value$) {&#10;&#9;sm.Lock()&#10;&#9;sm.Map[key] = value&#10;&#9;sm.Unlock()&#10;}&#10;&#10;func (sm * $name$Map)Delete(key $key$) {&#10;&#9;sm.Lock()&#10;&#9;delete(sm.Map, key)&#10;&#9;sm.Unlock()&#10;}&#10;$END$" description="map rwmutex" toReformat="false" toShortenFQNames="true">
+    <variable name="name" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="key" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="value" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1mapsync_old" value="// 此代码片段的作用是有类型化的读取，再没其它卵用了&#10;type $name$SyncMap struct {&#10;    Map sync.Map&#10;}&#10;&#10;func (this *$name$SyncMap) Load(key $keyType$)(v $valueType$, ok bool)  {&#10;&#9;i, ok := this.Map.Load(key)&#10;&#9;if !ok{&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;v = i.($valueType$)&#10;&#9;return&#10;}&#10;&#10;func (this *$name$SyncMap) LoadOrStore(key $keyType$, value $valueType$)(v $valueType$, ok bool)  {&#10;&#9;i, ok := this.Map.LoadOrStore(key, value)&#10;&#9;if !ok{&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;v = i.($valueType$)&#10;&#9;return&#10;}&#10;&#10;func (this *$name$SyncMap) Range(f func(key $keyType$, value $valueType$) bool )  {&#10;&#9;this.Map.Range(func(key, value interface{}) bool {&#10;&#9;&#9;k := key.($keyType$)&#10;&#9;&#9;v := value.($valueType$)&#10;&#9;&#9;return f(k, v)&#10;&#9;})&#10;&#9;return&#10;}&#10;$END$" description="sync map with type" toReformat="false" toShortenFQNames="true">
+    <variable name="name" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="keyType" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="valueType" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1sd" value="$name$ = append($name$[:index], $name$[index + 1 :]...)" description="slice delete one" toReformat="false" toShortenFQNames="true">
+    <variable name="name" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1pe" value="if err != nil{&#10;    ___fn := &quot;&quot;&#10;    __pc, _,___line, ___ok := runtime.Caller(0)&#10;    if ___ok {&#10;        ___fn = runtime.FuncForPC(__pc).Name()&#10;    }&#10;    fmt.Println(&quot;error $fn$&quot;, ___fn, ___line, &quot;$tag$&quot;, err.Error())&#10;    return&#10;}$END$" description="print func error" toReformat="false" toShortenFQNames="true">
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <variable name="tag" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1per" value="if err != nil{&#10;    fmt.Print(&quot;$i$&quot;,$END$ err.Error())&#10;    return&#10;}" description="print error and return" toReformat="false" toShortenFQNames="true">
+    <variable name="i" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tmbaobei" value="&#10;import (&#10;&#9;&quot;encoding/json&quot;&#10;&#9;&quot;fmt&quot;&#10;&#9;&quot;github.com/go-pg/pg&quot;&#10;&#9;&quot;shangwoa/common/net/request&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/pgdbs&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/router_session&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/tms&quot;&#10;)&#10;&#10;func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$Body)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;err, uuid, toReturn := router_session.CheckIsExpressCustomerAppWithReturn(rd.R, resBody)&#10;&#9;if toReturn {&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;$END$&#10;&#9;isRollBack = false&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="fn" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tmbaobei备份" value="func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;type $LowTeamName$$MemberName$BodyShell struct{&#10;&#9;Body *$LowTeamName$$MemberName$Body&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$BodyShell)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data.Body&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;err, uuid, toReturn := router_session.CheckIsExpressCustomerAppWithReturn(rd.R, resBody)&#10;&#9;if toReturn {&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;&#10;&#9;isRollBack = false&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="fn" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tmddkreturn" value="&#10;import (&#10;&#9;&quot;encoding/json&quot;&#10;&#9;&quot;fmt&quot;&#10;&#9;&quot;github.com/go-pg/pg&quot;&#10;&#9;&quot;shangwoa/common/net/request&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/pgdbs&quot;&#10;&#9;&quot;shangwoa/express/apps/pdd-fetch-data/auth&quot;&#10;&#9;&quot;shangwoa/express/apps/pdd-fetch-data/tms&quot;&#10;)&#10;&#10;func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$Body)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;err, uuid, toReturn := auth.CheckIsUserWithReturn(rd.R, resBody)&#10;&#9;if toReturn{&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;$END$&#10;&#9;isRollBack = false&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}" description="多多客 return url" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="decapitalize(TeamName)" alwaysStopAt="false" />
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tmxcx备份" value="func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;type $LowTeamName$$MemberName$BodyShell struct{&#10;&#9;Body *$LowTeamName$$MemberName$Body&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$BodyShell)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data.Body&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;err, uuid, toReturn := router_session.CheckIsExperssXiaochengxuWithReturn(rd.R, resBody)&#10;&#9;if toReturn {&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;&#10;&#9;isRollBack = false&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}" description="小程序接口" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="decapitalize(TeamName)" alwaysStopAt="false" />
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1mapsync" value="//如果要外部可访问，就把name大写，生成代码后，再把map的变量名重构成小写，这样就可以方法是外部可访问，变量不可访问了&#10;var $name$SyncMap sync.Map&#10;func $name$SyncMapLoad(m sync.Map, key $keyType$)(v $valueType$, ok bool)  {&#10;&#9;i, ok := m.Load(key)&#10;&#9;if !ok{&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;v = i.($valueType$)&#10;&#9;return&#10;}&#10;&#10;func $name$SyncMapLoadOrStore(m sync.Map, key $keyType$, value $valueType$)(v $valueType$, ok bool)  {&#10;&#9;i, ok := m.LoadOrStore(key, value)&#10;&#9;if !ok{&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;v = i.($valueType$)&#10;&#9;return&#10;}&#10;&#10;func $name$SyncMapRange(m sync.Map, f func(key $keyType$, value $valueType$) bool )  {&#10;&#9;m.Range(func(key, value interface{}) bool {&#10;&#9;&#9;k := key.($keyType$)&#10;&#9;&#9;v := value.($valueType$)&#10;&#9;&#9;return f(k, v)&#10;&#9;})&#10;&#9;return&#10;}&#10;$END$" description="// 该代码片段的作用是有类型化的读取，再没其它卵用了。" toReformat="false" toShortenFQNames="true">
+    <variable name="name" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="keyType" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="valueType" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1retry" value="&#10;retryCount := 0&#10;for {&#10;    $END$&#10;    if err == nil{&#10;        break;&#10;    }&#10;    if retryCount &gt; 10{&#10;        return&#10;    }&#10;    retryCount ++&#10;    time.Sleep(time.Second * time.Duration(retryCount))&#10;}" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tmhouse1" value="&#10;import (&#10;&#9;&quot;encoding/json&quot;&#10;&#9;&quot;fmt&quot;&#10;&#9;&quot;github.com/go-pg/pg&quot;&#10;&#9;&quot;shangwoa/common/net/request&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/pgdbs&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/router_session&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/tms&quot;&#10;)&#10;&#10;func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$Body)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;err, uuid, toReturn := router_session.CheckIsExperssHouseWithReturn(rd.R, resBody)&#10;&#9;if toReturn{&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(&quot;$fn$&quot;, rd.Team, rd.Member, rd.RequestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;&#10;&#9;isRollBack = false&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}" description="快递驿站接口" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="decapitalize(TeamName)" alwaysStopAt="false" />
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1printinfowithpath" value="___fn := &quot;&quot;&#10;__pc, _,___line, ___ok := runtime.Caller(0)&#10;if(___ok){&#10;    ___fn = runtime.FuncForPC(__pc).Name()&#10;}&#10;fmt.Println(&quot;error $fn$&quot;, ___fn, ___line, &quot;$tag$&quot;, err.Error())&#10;return&#10;$END$" description="打印带有路径信息的消息，并退出" toReformat="false" toShortenFQNames="true">
+    <variable name="fn" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <variable name="tag" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tmbaobei2" value="&#10;import (&#10;&#9;&quot;encoding/json&quot;&#10;&#9;&quot;fmt&quot;&#10;&#9;&quot;github.com/go-pg/pg&quot;&#10;&#9;&quot;shangwoa/common/net/request&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/pgdbs&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/router_session&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/tms&quot;&#10;&#9;&quot;shangwoa/express/apps/post-house/routers/vo&quot;&#10;)&#10;&#10;func init() {&#10;&#9;request.AddMember(tms.$TeamName$, tms.$MemberName$, $LowTeamName$$MemberName$BodyHandler, $LowTeamName$$MemberName$BodyShellParser)&#10;&#9;//test$LowTeamName$$MemberName$BodyHandler()&#10;}&#10;&#10;type $LowTeamName$$MemberName$Body struct{&#10;&#9;Num string `json:&quot;num&quot;`&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyShellParser(bs []byte) (error, interface{})   {&#10;&#9;data := new($LowTeamName$$MemberName$Body)&#10;&#9;err := json.Unmarshal(bs, data)&#10;&#9;return err, data&#10;}&#10;&#10;func $LowTeamName$$MemberName$BodyHandler(rd *request.RequestData) (err error, headerCode int, res *request.ResData)  {&#10;&#9;resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;&#9;res = &amp;request.ResData{Data: resBody, IsOK: false, ErrMsg: &quot;&quot;,}&#10;&#9;err, hasUser, sess := router_session.GetUserSession(rd.R, resBody)&#10;&#9;if !hasUser {&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;body := rd.BodyStruct.(*$LowTeamName$$MemberName$Body)&#10;&#9;err, headerCode = do$LowTeamName$$MemberName$BodyHandler(sess, resBody, body, rd.RequestIndex)&#10;&#9;if err != nil {&#10;&#9;&#9;return&#10;&#9;}&#10;&#9;resBody.IsOk = true&#10;&#9;return&#10;}&#10;&#10;func do$LowTeamName$$MemberName$BodyHandler(sess *vo.UserSession, resBody *$LowTeamName$$MemberName$ResultBody, body *$LowTeamName$$MemberName$Body, requestIndex int64) (err error, headerCode int){&#10;    &#10;&#9;if body == nil{&#10;&#9;&#9;resBody.Msg = &quot;no body&quot;&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;var tx *pg.Tx&#10;&#9;isRollBack := true&#10;&#9;defer func() {&#10;&#9;&#9;if tx == nil{&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;if isRollBack{&#10;&#9;&#9;&#9;tx.Rollback()&#10;&#9;&#9;}else{&#10;&#9;&#9;&#9;tx.Commit()&#10;&#9;&#9;}&#10;&#9;}()&#10;&#9;tx, err = pgdbs.MainPg.Begin()&#10;&#9;if err != nil{&#10;&#9;&#9;fmt.Println(tms.$TeamName$, tms.$MemberName$, requestIndex, &quot;pgdbs.MainPg.Begin error&quot;, err.Error())&#10;&#9;&#9;return &#10;&#9;}&#10;&#9;$END$&#10;&#9;isRollBack = false&#10;&#9;return&#10;}&#10;&#10;type $LowTeamName$$MemberName$ResultBody struct{&#10;&#9;IsOk bool `json:&quot;is_ok&quot;`&#10;&#9;Msg string `json:&quot;msg&quot;`&#10;&#9;&#10;}&#10;&#10;func (this *$LowTeamName$$MemberName$ResultBody) SetMsg(msg string) {&#10;&#9;this.Msg = msg&#10;}&#10;&#10;func test$LowTeamName$$MemberName$BodyHandler(){&#10;    resBody := &amp;$LowTeamName$$MemberName$ResultBody{}&#10;    body := &amp;$LowTeamName$$MemberName$Body{}&#10;    err, headerCode := do$LowTeamName$$MemberName$BodyHandler(&amp;vo.UserSession{}, resBody, body, 1)&#10;    _ = err&#10;    _ = headerCode&#10;}" description="宝贝到啦顾客端接口生成" toReformat="false" toShortenFQNames="true">
+    <variable name="TeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="MemberName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="LowTeamName" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tpe" value="if errors2.TryPrintFuncError(&quot;$prefix$&quot;, err, 1, $params$) {&#10;    return&#10;}" description="try to print function error" toReformat="false" toShortenFQNames="true">
+    <variable name="prefix" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="params" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="1tpeInIf" value="if has, _, fn, line, _, _ := errors2.GetFuncLineInfo(err,1); has{&#10;    fmt.Println(&quot;$prefix$&quot;, fn, line, err.Error(), $end$)&#10;    return&#10;}" description="在if语句内打印错误 包括行信息" toReformat="false" toShortenFQNames="true">
+    <variable name="prefix" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="end" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+</templateSet>

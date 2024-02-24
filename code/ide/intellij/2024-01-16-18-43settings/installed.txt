@@ -1,0 +1,5 @@
+com.github.b3er.idea.plugins.arc.browser
+de.netnexus.camelcaseplugin
+de.nordgedanken.auto_hotkey
+io.zhile.research.ide-eval-resetter
+org.jetbrains.plugins.go

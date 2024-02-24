@@ -1,0 +1,127 @@
+<templateSet group="zjs">
+  <template name="aajsgs" value="&#10;this._$name$ = $v$$END$;&#10;static get event$upperName$Changed(){return &quot;event$upperName$Changed&quot;};&#10;get $name$(){&#10;    return this._$name$;&#10;}&#10;set $name$(value){&#10;    if(this._$name$ === value)return;&#10;    let old = this._$name$;&#10;    this._$name$ = value;&#10;    let event = new PropertyChangeEvent($className$.event$upperName$Changed, old, value, PropertyChangeEvent.UPDATE);&#10;    this.dispatchEvent(event);&#10;}" description="getter setter with event" toReformat="false" toShortenFQNames="true">
+    <variable name="name" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="v" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="upperName" expression="capitalize(name)" defaultValue="" alwaysStopAt="false" />
+    <variable name="className" expression="jsClassName()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aaclassExport" value="&#10;const $lowerClass$ = new $class$();&#10;module.exports = {$lowerClass$, $class$};" description="类和类示例导出，一般用于单例和类的导出" toReformat="false" toShortenFQNames="true">
+    <variable name="lowerClass" expression="decapitalize(clipboard())" defaultValue="" alwaysStopAt="false" />
+    <variable name="class" expression="clipboard()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aacontroller" value="&#10;class $className${&#10;    constructor() {&#10;    }&#10;    init = ()=&gt;{&#10;        this._addEvents();&#10;    }&#10;    start = ()=&gt;{&#10;&#10;    }&#10;    _addEvents = ()=&gt;{&#10;        $END$&#10;    }&#10;    &#10;}&#10;&#10;const $lowerClassName$ = new $className$();&#10;module.exports = {$lowerClassName$, $className$};" description="create a controller" toReformat="false" toShortenFQNames="true">
+    <variable name="lowerClassName" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="className" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aamodel" value="import {EventDispatcher} from &quot;../../../events/EventDispatcher&quot;;&#10;import PropertyChangeEvent from &quot;../../../events/PropertyChangeEvent&quot;;&#10;&#10;export class $className$ extends EventDispatcher{&#10;    constructor() {&#10;        super();&#10;    }&#10;    init = ()=&gt;{&#10;        &#10;    }&#10;    &#10;}&#10;&#10;export const $lowerClassName$ = new $className$();" description="create a modal" toReformat="false" toShortenFQNames="true">
+    <variable name="className" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="lowerClassName" expression="decapitalize(className)" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aanewmember" value="&#10;let member = new Member(TMs.$team$, TMs.$member$, {}, (res)=&gt;{&#10;    console.log(`TMs.$team$, TMs.$member$ res is`, res)&#10;}, (member)=&gt;{&#10;    console.log(`TMs.$team$, TMs.$member$ net error is`, member.netError, member.netErrorInfo);&#10;}, (member)=&gt;{&#10;    console.log(`TMs.$team$, TMs.$member$ data error is`, member.dataError, member.dataErrorInfo);&#10;}, (member) =&gt;{&#10;    console.log(`TMs.$team$, TMs.$member$ complete is`, member.isNetOk, member.isDataOk, member.isTotallyOk);&#10;}, null, true, true);&#10;mainModel.dispatchEvent(new Event2(MainModel.events.addWaitingMember, member.send));" description="new member" toReformat="false" toShortenFQNames="true">
+    <variable name="team" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="member" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aanewreactpage" value="import {ComponentBase} from &quot;../components/ComponentBase&quot;;&#10;import PropertyChangeEvent from &quot;../../../../events/PropertyChangeEvent&quot;;&#10;import {IParams, model} from &quot;./model&quot;;&#10;&#10;let page:$Page$;&#10;export function getPage():$Page${&#10;    return page;&#10;}&#10;export class $Page$ extends ComponentBase{&#10;    private _eventsInitialized:boolean = false;&#10;    constructor(props) {&#10;        super(props);&#10;        this.state = {params:null};&#10;        page = this;&#10;        this.dispatcher.addEventListener(ComponentBase.eventIsMountedChanged, this._onMounted);&#10;    }&#10;    setParams = (params:IParams)=&gt;{&#10;        this.setState({params})&#10;    }&#10;    _onAdded = ()=&gt;{&#10;        page = this;&#10;        this._addEvents();&#10;    }&#10;    _onRemoved = ()=&gt;{&#10;        this._removeEvents();&#10;    }&#10;    _addEvents = ()=&gt;{&#10;        if(this._eventsInitialized)return;&#10;        this._eventsInitialized = true;&#10;    }&#10;    _removeEvents = ()=&gt;{&#10;        if(!this._eventsInitialized)return;&#10;        this._eventsInitialized = false;&#10;    }&#10;    _onMounted = (e:PropertyChangeEvent&lt;boolean&gt;)=&gt;{&#10;        if(e.newValue){&#10;            this._onAdded();&#10;        }else{&#10;            this._onRemoved();&#10;        }&#10;    }&#10;    render = () =&gt;{&#10;        return &lt;Page pageContent={&quot;false&quot;}&gt;&#10;            $END$&#10;        &lt;/Page&gt;&#10;    }&#10;}" description="create a new react page" toReformat="false" toShortenFQNames="true">
+    <variable name="Page" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aatsgs" value="&#10;private _$name$:$type$ = $v$$END$;&#10;static readonly event$upperName$Changed = &quot;event$upperName$Changed&quot;;&#10;get $name$():$type${&#10;    return this._$name$;&#10;}&#10;set $name$(value:$type$){&#10;    dispatchPropertyChangeEvent(value, &quot;_$name$&quot;, this, $className$.event$upperName$Changed, value == this[&quot;_$name$&quot;]);&#10;}" description="typescript getter setter with event" toReformat="false" toShortenFQNames="true">
+    <variable name="name" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="type" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="v" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="upperName" expression="capitalize(name)" defaultValue="" alwaysStopAt="false" />
+    <variable name="className" expression="jsClassName()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aatoast" value="f7.toast.create({text:`$text$`, destroyOnClose:true}).open();" description="f7 simple toast" toReformat="false" toShortenFQNames="true">
+    <variable name="text" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aarouter" value="import {PageModel} from &quot;../../mc/PageModel&quot;;&#10;import {getPage, $Page$} from &quot;./$Page$&quot;;&#10;import {IRouterConf} from &quot;../IPageRouterTabConf&quot;;&#10;import {IParams, model} from &quot;./Model&quot;;&#10;import {PageEvent} from &quot;../pageevents/PageEvent&quot;;&#10;&#10;export const $name$:IRouterConf = {&#10;    path: `/${PageModel.pageNames.$pageName$}`,&#10;    name:PageModel.pageNames.$pageName$,&#10;    mainTab:PageModel.mainViewTabs.discount$END$,&#10;    component: $Page$,&#10;    title:()=&gt;{},&#10;    on: {&#10;        pageInit: function (e, page) {&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page init is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageInit, page));&#10;        },&#10;        pageReinit:function (e, page){&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageReinit is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageReinit, page));&#10;        },&#10;        pageBeforeIn:function (e, page){&#10;            let s = decodeURIComponent(page.route.query.d);&#10;            let q = JSON.parse(s);&#10;            getPage().setParams(q as IParams);&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageBeforeIn is`, s);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageBeforeIn, page));&#10;        },&#10;        pageMounted:function (e, page){&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageMounted is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageMounted, page));&#10;        },&#10;        pageAfterIn: function test(e, page) {&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageAfterIn  is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageAfterIn, page));&#10;        },&#10;        pageBeforeOut:function (e, page){&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageBeforeOut is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageBeforOut, page));&#10;        },&#10;        pageAfterOut:function (e, page){&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageAfterOut is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageAfterOut, page));&#10;        },&#10;        onPageBeforeUnmount:function (e, page){&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page onPageBeforeUnmount is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageBeforUnmount, page));&#10;        },&#10;        pageBeforeRemove:function (e, page){&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageBeforeRemove is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageBeforRemove, page));&#10;        },&#10;        pageTabShow:function (e, page){&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageTabShow is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageTabShow, page));&#10;        },&#10;        pageTabHide:function (e, page){&#10;            // console.log(`${PageModel.pageNames.$pageName$} on page pageTabHide is`, e, page);&#10;            model.dispatchEvent(new PageEvent(PageEvent.EventTypes.onPageTabHide, page));&#10;        }&#10;    }&#10;}" description="create react router" toReformat="false" toShortenFQNames="true">
+    <variable name="Page" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="name" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="true" />
+    <variable name="pageName" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aapagemodel" value="import {EventDispatcher} from &quot;../../../../events/EventDispatcher&quot;;&#10;import {PropertyChangeEvent} from &quot;../../../../events/PropertyChangeEvent&quot;;&#10;&#10;export class Model extends EventDispatcher{&#10;    constructor() {&#10;        super();&#10;    }&#10;    init = ()=&gt;{&#10;&#10;    }&#10;&#10;}&#10;export interface IParams{&#10;&#10;}&#10;export const model = new Model();" description="create a page model" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aareactui" value="import {ComponentBase} from &quot;../components/ComponentBase&quot;;&#10;import PropertyChangeEvent from &quot;../../../../events/PropertyChangeEvent&quot;;&#10;import {TMs} from &quot;../../remotes/TMs&quot;;&#10;import {Member} from &quot;../../remotes/Member&quot;;&#10;import {MainModel, mainModel} from &quot;../../mc/MainModel&quot;;&#10;import {Event2} from &quot;../../../../events/Event2&quot;;&#10;import {userModel} from &quot;../../mc/UserModel&quot;;&#10;import {User} from &quot;../../vo/user/User&quot;;&#10;&#10;export class $Name$ extends ComponentBase{&#10;    private _eventsInitialized:boolean = false;&#10;    constructor(props) {&#10;        super(props);&#10;        this.state = {params:null};&#10;        this.dispatcher.addEventListener(ComponentBase.eventIsMountedChanged, this._onMounted);&#10;    }&#10;    _onAdded = ()=&gt;{&#10;        this._addEvents();&#10;    }&#10;    _onRemoved = ()=&gt;{&#10;        this._removeEvents();&#10;    }&#10;  _addEvents = () =&gt; {&#10;    if (this._eventsInitialized) return;&#10;    this._eventsInitialized = true;&#10;    userModel.user.addEventListener(User.eventIsLoggedChanged, this._onLoggedChanged);&#10;    this._fetchData();&#10;  }&#10;  _removeEvents = () =&gt; {&#10;    if (!this._eventsInitialized) return;&#10;    this._eventsInitialized = false;&#10;    userModel.user.removeEventListener(User.eventIsLoggedChanged, this._onLoggedChanged);&#10;  }&#10;    _onMounted = (e:PropertyChangeEvent&lt;boolean&gt;)=&gt;{&#10;        if(e.newValue){&#10;            this._onAdded();&#10;        }else{&#10;            this._onRemoved();&#10;        }&#10;    }&#10;    render = () =&gt;{&#10;        return &lt;$END$&gt;&lt;/&gt;&#10;    }&#10;}" description="create a react ui" toReformat="false" toShortenFQNames="true">
+    <variable name="Name" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aapagegroup" value="$PageName$" description="create page model router" toReformat="false" toShortenFQNames="true">
+    <variable name="PageName" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aaspace" value="&amp;nbsp;" description="html空格" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="ECMAScript6" value="true" />
+      <option name="HTML" value="true" />
+      <option name="JAVA_SCRIPT" value="true" />
+      <option name="TypeScript" value="true" />
+    </context>
+  </template>
+  <template name="aareactcomponent" value="import React from 'react';&#10;import {ComponentBase} from &quot;../../libs/shangwoa/react/components/ComponentBase&quot;;&#10;export class $name$ extends ComponentBase {&#10;    constructor(props) {&#10;        super(props);&#10;    }&#10;    emptyRender(){&#10;        return(&lt;&gt;&lt;/&gt;)&#10;    }&#10;&#10;    render() {&#10;        let data;&#10;        if(!data)return this.emptyRender();&#10;        return (&#10;            &lt;&gt;&#10;                $END$&#10;            &lt;/&gt;&#10;        )&#10;    }&#10;}" description="react component" toReformat="false" toShortenFQNames="true">
+    <variable name="name" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="ECMAScript6" value="true" />
+      <option name="HTML" value="true" />
+      <option name="JAVA_SCRIPT" value="true" />
+      <option name="TypeScript" value="true" />
+    </context>
+  </template>
+  <template name="zzhtmlspace" value="&lt;span&gt;&amp;nbsp;&lt;/span&gt;" description="html空格" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="HTML" value="true" />
+      <option name="JAVA_SCRIPT" value="true" />
+      <option name="TypeScript" value="true" />
+    </context>
+  </template>
+  <template name="aatry" value="try{&#10;    $END$&#10;}catch (e){ console.log(&quot;err&quot;, e) }finally {}" description="" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aajavajs" value="import {scriptTools as t} from &quot;#/droid/rhino/scripts/scriptTools&quot;;&#10;const conf = {&#10;    forceStopTime:0,&#10;    onlyRunSingle :true,&#10;    stopPrevIfOnlyRunSingle: true,&#10;    script:`${t.unShell(script.toString())}`,&#10;    params:{&#10;        &quot;keyName&quot;:&quot;keyValue will be replaced in script&quot;&#10;    }&#10;}&#10;&#10;function script(){&#10;    // var someData = `${keyName}`&#10;    function onJavaCallTerminate(){&#10;&#10;    }&#10;    var bl = com.fanfanlo.lib.permissions.FloatPermission.hasPermission();&#10;    webViewJs.callJsFun(&quot;onCheckFloatPermissionHasPermissionResult&quot;, bl);&#10;}&#10;&#10;export function $a$(){&#10;    t.callScript(conf)&#10;}&#10;" description="java js" toReformat="false" toShortenFQNames="true">
+    <variable name="a" expression="fileNameWithoutExtension()" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+  <template name="aagotmsjs" value="$E$," toReformat="false" toShortenFQNames="true">
+    <variable name="E" expression="regularExpression(regularExpression(clipboard() , &quot;=&quot;, &quot;:&quot;), &quot;\n&quot;,&quot;,\n&quot;)" defaultValue="" alwaysStopAt="false" />
+    <context>
+      <option name="JAVA_SCRIPT" value="true" />
+    </context>
+  </template>
+</templateSet>
