@@ -3,6 +3,7 @@
 ```
 新版本改成
 pg.PrintPgSql = true
+writeQueryMsg
 在github.com\go-pg\pg\messages.go425行
 ```
 
