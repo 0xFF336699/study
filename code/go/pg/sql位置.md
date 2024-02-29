@@ -3,6 +3,11 @@
 ```
 新版本改成
 pg.PrintPgSql = true
+
+
+	if PrintPgSql{
+		println("pg sql is", string(bytes))
+	}
 writeQueryMsg
 在github.com\go-pg\pg\messages.go425行
 ```
