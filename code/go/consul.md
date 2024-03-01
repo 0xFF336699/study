@@ -16,3 +16,5 @@ watch的方法在funcs.go里
 	}
 参照上方代码之下的代码能找到各种侦听对应需要添加的参数，例如keyprefix是要侦听的type，要侦听的字段是prefix  
 {type:"keyprefix",prefix:"/folder path"}  
+
+注意 http://localhost:8500 后面不能有斜杠  
