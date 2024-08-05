@@ -1,3 +1,14 @@
+
+
+
+```
+系统存放路径
+C:\Users\x\AppData\Roaming\Code\User\snippets
+文档
+https://vscode.js.cn/docs/editor/userdefinedsnippets
+
+```
+
 ```
 获取文件夹名字
 https://stackoverflow.com/questions/52877815/vscode-snippet-transform-to-determine-the-containing-directory
