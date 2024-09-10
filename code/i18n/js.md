@@ -1,4 +1,6 @@
-```
+# js i18n
+
+```js
 
 
 "userMessagesUnread_other": "Hello <b>{{name}}</b>, age=<i>{{age}}</i>, you have {{count}} unread messages.  <strong>Go to messagesss</strong>."
@@ -17,3 +19,21 @@ function MyComponent() {
   );
 }
 ```
+
+实现代码提示
+see <https://carljin.com/posts/i18next-react-typescript/>
+
+```js
+import "i18next";
+import { localeTransitions } from "./loadLangsToResouerce.ts";
+
+declare module "i18next" {
+  interface CustomTypeOptions {
+    defaultNS: "zh-CN";
+    resources: (typeof localeTransitions)["zh-CN"];
+  }
+}
+```
+
+代码提示2  
+see <https://juejin.cn/post/7029624032517423134>  
