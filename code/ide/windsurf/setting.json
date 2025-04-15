@@ -1,0 +1,10 @@
+{
+    "workbench.colorTheme": "Default Light Modern",
+    "vscode_custom_css.imports": [
+        
+"file:///C:/work/vscode/theme/x.css"
+    ],
+    "editor.fontSize": 16,
+    "workbench.editor.wrapTabs": true,
+    "editor.wordWrap": "bounded"
+}
